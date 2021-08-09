@@ -3,11 +3,12 @@
 (to be added)
 ## Architecture
 ## Example WorkFlow:
-1. Disable Kinect-related script in the scene.
-2. Add 'MotionInputManager.cs' to 'Main Camera' in the scene.
-3. Add 'AvatarController2.cs' to 'U_CharacterBack'.
-4. Run 'main.exe' outside Unity;
-5. Click 'Play' in Unity;
+1. Download main.exe from here: https://liveuclac-my.sharepoint.com/:u:/r/personal/ucaboua_ucl_ac_uk/Documents/main.exe?csf=1&web=1&e=Bi8cDs
+2. Disable Kinect-related script in the scene.
+3. Add 'MotionInputManager.cs' to 'Main Camera' in the scene.
+4. Add 'AvatarController2.cs' to 'U_CharacterBack'.
+5. Run 'main.exe' outside Unity;
+6. Click 'Play' in Unity;
 ## Explanations
 ### Executable - main.exe
 1. This program will be reading frames from webcam, processing frames, calculating orientation values and joining them into a local string.
