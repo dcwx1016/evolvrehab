@@ -2,6 +2,7 @@
 ## Video Demonstration
 (to be added)
 ## Architecture
+![avatar](./img/001.png)
 ## Example WorkFlow:
 1. Download main.exe from here: https://liveuclac-my.sharepoint.com/:u:/r/personal/ucaboua_ucl_ac_uk/Documents/main.exe?csf=1&web=1&e=Bi8cDs
 2. Disable Kinect-related script in the scene.
