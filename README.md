@@ -4,11 +4,19 @@ https://www.youtube.com/watch?v=mxQvLYzM7aA
 ## Architecture
 ![avatar](./img/001.png)
 ## Example WorkFlow(for sample project):
-1. Download main.exe from here: https://liveuclac-my.sharepoint.com/:u:/r/personal/ucaboua_ucl_ac_uk/Documents/main.exe?csf=1&web=1&e=Bi8cDs
+### For Holistic model:
+1. Download main.exe from here: https://liveuclac-my.sharepoint.com/:f:/g/personal/ucaboua_ucl_ac_uk/EiJO-F38__ZMmsPxY4eNHb0BNdi73braMwL962jqO_jsCw?e=hxWFr4
 2. Disable Kinect-related script(including KinectManager.cs, AvatarController.cs) in the scene.
-3. Add 'MotionInputManager.cs' to 'Main Camera' in the scene.
-4. Add 'AvatarController2.cs' to 'U_CharacterBack'.
+3. Add 'MotionInputManager.cs' to 'Main Camera' in the Unity scene.
+4. Add 'AvatarController2.cs' to 'U_CharacterBack' in the Unity scene..
 5. Run 'main.exe' outside Unity;
+6. Click 'Play' in Unity;
+### For Holistic-Iris model:
+(this currently cannot be compiled into exe and has to be run in python environment)
+1. Use pip to install the packages in "requirement.txt" in "src_iris" folder.
+3. Add 'MotionInputManager.cs' to 'Main Camera' in the Unity scene.
+4. Add 'AvatarController2.cs' to 'U_CharacterBack' in the Unity scene..
+5. launch the 'SkeletonWtihIris.py' script.
 6. Click 'Play' in Unity;
 ## Explanations
 ### Executable - main.exe
