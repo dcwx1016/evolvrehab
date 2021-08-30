@@ -3,9 +3,9 @@
 (to be added)
 ## Architecture
 ![avatar](./img/001.png)
-## Example WorkFlow:
+## Example WorkFlow(for sample project):
 1. Download main.exe from here: https://liveuclac-my.sharepoint.com/:u:/r/personal/ucaboua_ucl_ac_uk/Documents/main.exe?csf=1&web=1&e=Bi8cDs
-2. Disable Kinect-related script in the scene.
+2. Disable Kinect-related script(including KinectManager.cs, AvatarController.cs) in the scene.
 3. Add 'MotionInputManager.cs' to 'Main Camera' in the scene.
 4. Add 'AvatarController2.cs' to 'U_CharacterBack'.
 5. Run 'main.exe' outside Unity;
