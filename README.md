@@ -19,3 +19,5 @@ This script should be attached to any object in the scene, for example 'Main Cam
 the data and derive joint orientations(axis aligned with Unity world coordinate). It also provides a method that return specific joint values. 
 ### Unity Script - AvatarController2.cs
 This script should be attached to the Avatar(facing z-axis in world coordinate system). It will keep calling MotionInputManager to get orientation values and update the bones orientations.
+### Python to Exe：
+#pyinstaller --noconfirm --onefile --console --name "main" --add-data "C:/Users/aashi/AppData/Local/Programs/Python/Python37/Lib/site-packages/mediapipe;mediapipe" --add-data "C:\Users\aashi\AppData\Local\Programs\Python\Python37\Lib\site-packages\pynput;pynput" --add-data "C:/Users/aashi/Documents/dissertation/MotionInput/version2.0/scripts/config.json;config.json" "C:/Users/aashi/Documents/dissertation/MotionInput/version2.0/scripts/main.py"

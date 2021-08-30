@@ -12,10 +12,12 @@ public class MotionInputManager : MonoBehaviour
     protected static MotionInputManager instance = null;
     // Bool to keep track of whether Kinect has been initialized
     protected bool miInitialized = false;
+    protected bool isTracked = false;
     private Vector3 rightHandposition;
     private Vector3 leftHandposition;
     private Socket udpClient;
     protected Vector3[] joints;
+    protected float distanceToCamera = 2.0f;
 
     // Start is called before the first frame update
     void Awake()
@@ -45,205 +47,27 @@ public class MotionInputManager : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Gets the joint orientation of the specified user.
-    /// </summary>
-    /// <returns>The joint rotation.</returns>
-    /// <param name="userId">User ID</param>
-    /// <param name="joint">Joint index</param>
-    /// <param name="flip">If set to <c>true</c>, this means non-mirrored rotation</param>
-    public Quaternion GetJointOrientation(int joint)
-    {
-        //if (userManager.dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = userManager.dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < trackedBodiesCount && alTrackedBodies[index].bIsTracked)
-        //    {
-        //        if (flip)
-        //            return alTrackedBodies[index].joint[joint].normalRotation;
-        //        else
-        //            return alTrackedBodies[index].joint[joint].mirroredRotation;
-        //    }
-        //}
-        return Quaternion.identity;
-    }
-
-    public Vector3 GetJointPointing(int joint)
-    {
-        return joints[joint];
-    }
-
-    public Vector3 GetUserPosition()
-    {
-        //if (userManager.dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = userManager.dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < trackedBodiesCount && alTrackedBodies[index].bIsTracked)
-        //    {
-        //        return alTrackedBodies[index].position;
-        //    }
-        //}
-
-        return new Vector3(0,0,4);
-    }
-
-    public Vector3 GetJointPosColorOverlay( int joint, int sensorIndex, Camera camera, Rect imageRect)
-    {
-        //if (userManager.dictUserIdToIndex.ContainsKey(userId) && camera != null)
-        //{
-        //    int index = userManager.dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < trackedBodiesCount && alTrackedBodies[index].bIsTracked)
-        //    {
-        //        if (joint >= 0 && joint < (int)KinectInterop.JointType.Count)
-        //        {
-        //            KinectInterop.JointData jointData = alTrackedBodies[index].joint[joint];
-        //            Vector3 posJointRaw = jointData.kinectPos;
-
-        //            return GetJointPosColorOverlay(posJointRaw, sensorIndex, camera, imageRect);
-        //        }
-        //    }
-        //}
-
-        return Vector3.zero;
-    }
-    /// <summary>
-    /// Gets the user position in Kinect coordinate system, in meters.
-    /// </summary>
-    /// <returns>The user kinect position.</returns>
-    /// <param name="userId">User ID</param>
-    /// <param name="applyDepthScale">Whether to apply the sensor space scale or not</param>
-    public Vector3 GetUserKinectPosition(bool applySpaceScale)
-    {
-        //if (userManager.dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = userManager.dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < trackedBodiesCount && alTrackedBodies[index].bIsTracked)
-        //    {
-        //        Vector3 userKinectPos = alTrackedBodies[index].kinectPos;
-
-        //        if (applySpaceScale && btSensorIndex >= 0 && btSensorIndex < sensorDatas.Count)
-        //        {
-        //            Vector3 spaceScale = sensorDatas[btSensorIndex].sensorSpaceScale;
-        //            return new Vector3(userKinectPos.x * spaceScale.x, userKinectPos.y * spaceScale.y, userKinectPos.z);
-        //        }
-        //        else
-        //        {
-        //            return userKinectPos;
-        //        }
-        //    }
-        //}
-
-        return Vector3.zero;
-    }
-    public int GetPrimaryBodySensorIndex()
-    {
-        return 0;
-    }
-
-    public bool IsJointTracked(int joint)
-    {
-        //if (dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < sensorData.bodyCount &&
-        //        bodyFrame.bodyData[index].bIsTracked != 0)
-        //    {
-        //        if (joint >= 0 && joint < sensorData.jointCount)
-        //        {
-        //            KinectInterop.JointData jointData = bodyFrame.bodyData[index].joint[joint];
-
-        //            return ignoreInferredJoints ? (jointData.trackingState == KinectInterop.TrackingState.Tracked) :
-        //                (jointData.trackingState != KinectInterop.TrackingState.NotTracked);
-        //        }
-        //    }
-        //}
-        return true;
-    }
-
-    public Vector3 GetJointMiPosition(int joint)
-    {
-        //if (dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < sensorData.bodyCount &&
-        //       bodyFrame.bodyData[index].bIsTracked != 0)
-        //    {
-        //        if (joint >= 0 && joint < sensorData.jointCount)
-        //        {
-        //            KinectInterop.JointData jointData = bodyFrame.bodyData[index].joint[joint];
-        //            return jointData.kinectPos;
-        //        }
-        //    }
-        //}
-        if(joint == 0) return rightHandposition;
-        if (joint == 1) return leftHandposition;
-        return Vector3.zero;
-    }
-
-    public string GetRightHandState()
-    {
-        //if (dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < sensorData.bodyCount &&
-        //        bodyFrame.bodyData[index].bIsTracked != 0)
-        //    {
-        //        return bodyFrame.bodyData[index].rightHandState;
-        //    }
-        //}
-        return "closed";
-    }
-
-    public string GetLeftHandState()
-    {
-        //if (dictUserIdToIndex.ContainsKey(userId))
-        //{
-        //    int index = dictUserIdToIndex[userId];
-
-        //    if (index >= 0 && index < sensorData.bodyCount &&
-        //        bodyFrame.bodyData[index].bIsTracked != 0)
-        //    {
-        //        return bodyFrame.bodyData[index].rightHandState;
-        //    }
-        //}
-        return "";
-    }
-
-    public bool IsUserDetected()
-    {
-        //TODO: add verification.
-        return true;
-    }
-
-    public bool IsUserTracked()
-    {
-        //TODO: add verification.
-        return true;
-    }
-
     public void UpdatePosition(string val)
     {
         string[] xy = val.Split(","[0]);
         int xPosition = int.Parse(xy[0]) / 2;
         int yPosition = 720 - int.Parse(xy[1]);
-        //Debug.Log(val[0]);
-        //Debug.Log(val[1]);
         rightHandposition = new Vector3(xPosition, yPosition, 0);
         leftHandposition = new Vector3(int.Parse(xy[2]) / 2, 720 - int.Parse(xy[3]), 0);
     }
 
     public void UpdateOrientation(string val)
     {
-        string[] xyz = val.Split(";"[0]);
-        if(xyz.Length > 7)
+        if (val == "empty")
         {
+            isTracked = false;
+            return;
+        }
+        isTracked = true;
+        string[] xyz = val.Split(";"[0]);
+        if (xyz.Length > 7)
+        {
+
             string[] shoulder = xyz[0].Split(","[0]);
             string[] upperArm = xyz[1].Split(","[0]);
             string[] leftShoulder = xyz[2].Split(","[0]);
@@ -276,23 +100,100 @@ public class MotionInputManager : MonoBehaviour
             joints[int.Parse(rightFoot[0])] = new Vector3(float.Parse(rightFoot[1]), -float.Parse(rightFoot[2]), -float.Parse(rightFoot[3]));
             joints[int.Parse(leftFoot[0])] = new Vector3(-float.Parse(leftFoot[1]), float.Parse(leftFoot[2]), float.Parse(leftFoot[3]));
         }
+        Debug.Log(xyz[13]);
+        if (xyz[13] != "")
+        {
+            float distance = float.Parse(xyz[13]);
+            distanceToCamera = distance / 100;
+        }
     }
 
     void ReceiveMessage()
     {
         while (true)
         {
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+            Debug.Log("send messsage");
+
             EndPoint serverPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7788);
             string message = "1";
             byte[] data = Encoding.UTF8.GetBytes(message);
             udpClient.SendTo(data, serverPoint);
 
-            byte[] receivedMessage = new byte[1024];//用来接受数据
-            int length = udpClient.ReceiveFrom(receivedMessage, ref serverPoint);//这个方法会把数据的来源（IP地址，端口号）放在第二个参数
+            byte[] receivedMessage = new byte[1024];
+            int length = udpClient.ReceiveFrom(receivedMessage, ref serverPoint);
             string outcome = Encoding.UTF8.GetString(receivedMessage, 0, length);
-            //UpdatePosition(outcome);
+            Debug.Log(outcome);
             UpdateOrientation(outcome);
+            stopwatch.Stop();
+            Debug.Log(1 / stopwatch.Elapsed.TotalMilliseconds);
         }
+    }
+
+    public Quaternion GetJointOrientation(int joint)
+    {
+        return Quaternion.identity;
+    }
+    public float GetDistance()
+    {
+        return distanceToCamera;
+    }
+
+    public Vector3 GetJointPointing(int joint)
+    {
+        return joints[joint];
+    }
+
+    public Vector3 GetUserPosition()
+    {
+        return new Vector3(0,0,4);
+    }
+
+    public Vector3 GetJointPosColorOverlay( int joint, int sensorIndex, Camera camera, Rect imageRect)
+    {
+        return Vector3.zero;
+    }
+
+    public Vector3 GetUserKinectPosition(bool applySpaceScale)
+    {
+        return Vector3.zero;
+    }
+    public int GetPrimaryBodySensorIndex()
+    {
+        return 0;
+    }
+
+    public bool IsJointTracked(int joint)
+    {
+        return true;
+    }
+
+    public Vector3 GetJointMiPosition(int joint)
+    {
+        if(joint == 0) return rightHandposition;
+        if (joint == 1) return leftHandposition;
+        return Vector3.zero;
+    }
+
+    public string GetRightHandState()
+    {
+        return "closed";
+    }
+
+    public string GetLeftHandState()
+    {
+        return "";
+    }
+
+    public bool IsUserDetected()
+    {
+        return true;
+    }
+
+    public bool IsUserTracked()
+    {
+        return isTracked;
     }
 
     private void OnDestroy()
@@ -304,7 +205,6 @@ public class MotionInputManager : MonoBehaviour
     {
         Quaternion rightToForward = Quaternion.Euler(0f, -90f, 0f);
         Quaternion forwardToTarget = Quaternion.LookRotation(right, up);
-
         return forwardToTarget * rightToForward;
     }
 }

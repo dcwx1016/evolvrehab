@@ -32,11 +32,11 @@ public class AvatarController2 : MonoBehaviour
         // Map bones to the points the Kinect tracks
         MapBones();
     }
+
     // Update is called once per frame
     void Update()
     {
-
-        //bones[10].transform.up = new Vector3(-1, 1, -1); // this works by reverse direction of y axis.
+        if (!miManager.IsUserTracked()) return;
         LookAtY(6);
         LookAtY(7);
         LookAtY(8);
@@ -45,37 +45,25 @@ public class AvatarController2 : MonoBehaviour
         LookAtY(12);
         LookAtY(13);
         LookAtY(14);
-        AlignWithX(15);
+        LookAtX(15);
         LookAtY(17);
         LookAtY(18);
-        AlignWithX(19);
-        bones[1].transform.rotation = Quaternion.Slerp(bones[1].transform.rotation, Quaternion.LookRotation(miManager.GetJointPointing(2).normalized, Vector3.up), 10 * (useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime));
-
-        //AlignWithY(6);
-        //AlignWithY(7);
-        //AlignWithY(10);
-        //AlignWithY(11);
-        //AlignWithY(13);
-        //AlignWithY(14);
-        //AlignWithY(17);
-        //AlignWithY(18);
-        //AlignWithY(8);
-        //AlignWithY(12);
-        //AlignWithX(19);
-        //AlignWithX(15);
-        //miManager.UpdateOrientation();
-        //bones[10].transform.rotation = Quaternion.LookRotation(new Vector3(1,0,0));//z,y
-        //bones[10].transform.rotation = miManager.GetJointOrientation(6);
-
+        LookAtX(19);
+        LookAtZ(1, 2);
+        MoveAvatar();
     }
 
-    private void AlignWithY(int index)
+    private void MoveAvatar()
     {
-        Quaternion newRotation = Quaternion.FromToRotation(transform.up, miManager.GetJointPointing(index));
-        bones[index].transform.rotation = Quaternion.Slerp(bones[index].transform.rotation, newRotation, 10 * (useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime));
+        bones[0].transform.position = new Vector3(0, 0.5f, 0.2f - miManager.GetDistance()); 
+        }
+
+    private void LookAtZ(int boneIndex, int index)
+    {
+        bones[boneIndex].transform.rotation = Quaternion.Slerp(bones[boneIndex].transform.rotation, Quaternion.LookRotation(miManager.GetJointPointing(index).normalized, Vector3.up), 10 * (useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime));
     }
 
-    private void AlignWithX(int index)
+    private void LookAtX(int index)
     {
         Quaternion rightToForward = Quaternion.Euler(0f, -90f, 0f); ;
         Quaternion forwardToTarget;
